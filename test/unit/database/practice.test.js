@@ -1,3 +1,4 @@
+/* jshint esversion:6 */
 import task1_initModel from '../../../src/database/task1';
 
 describe('practice', () => {
@@ -42,7 +43,7 @@ describe('practice', () => {
         price: 100,
       };
 
-      let result;
+      const result = await models.Post.create(input);
 
       result.title.should.be.eq('AAA');
       result.desc.should.be.eq('BBB');
@@ -54,17 +55,17 @@ describe('practice', () => {
   });
 
   describe('practice find', () => {
-    let models = null;
-    let targetPost = null
+    let modelsSec = null;
+    let targetPost = null;
     beforeEach(async (done) => {
       try {
-        models = await task1_initModel();
+        modelsSec = await task1_initModel();
         const data = {
           title: 'post a',
           desc: 'post desc',
           price: 100,
         };
-        targetPost = await models.Post.create(data);
+        targetPost = await modelsSec.Post.create(data);
         done();
       } catch (e) {
         done(e);
@@ -73,9 +74,7 @@ describe('practice', () => {
 
     it('使用 sequelize 尋找 targetPost ', async (done) => {
       try {
-
-        let findTarget;
-
+        const findTarget = await modelsSec.Post.findById(targetPost.id);
         findTarget.id.should.be.eq(targetPost.id);
         done();
       } catch (e) {
@@ -89,14 +88,17 @@ describe('practice', () => {
           title: '123',
           desc: '456',
           price: 999,
-        }
+        };
 
-        let findTarget;
-        let result;
+        let findTarget = await models.Post.create(targetPost);
+        findTarget.title = input.title;
+        findTarget.desc = input.desc;
+        findTarget.price = input.price;
+        findTarget.save();
 
-        result.title.should.be.eq(input.title);
-        result.desc.should.be.eq(input.desc);
-        result.price.should.be.eq(input.price);
+        findTarget.title.should.be.eq(input.title);
+        findTarget.desc.should.be.eq(input.desc);
+        findTarget.price.should.be.eq(input.price);
         done();
       } catch (e) {
         done(e);
@@ -105,10 +107,12 @@ describe('practice', () => {
 
     it('使用 sequelize 刪除 targetPost', async (done) => {
       try {
+        console.log('======使用 sequelize 刪除 targetPost=====');
 
-        let findTarget;
+        const findTarget = await modelsSec.Post.findById(targetPost.id);
+        await findTarget.destroy();
 
-        let check = await models.Post.findAll();
+        const check = await modelsSec.Post.findAll();
         (check.length === 0).should.be.true;
         done();
       } catch (e) {

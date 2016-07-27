@@ -1,4 +1,5 @@
-import FB from 'fb'
+/* jshint esversion: 6*/
+import FB from 'fb';
 
 // export default (userid, token, cb) => {
 //   FB.setAccessToken(token);
@@ -9,7 +10,7 @@ import FB from 'fb'
 
 export default class FacebookHelper {
 
-  constructor({token, userId}) {
+  constructor({ token, userId }) {
     this.FB = FB;
     this.FB.setAccessToken(token);
     this.userId = userId;
@@ -17,9 +18,9 @@ export default class FacebookHelper {
 
   async getFriends() {
     try {
-      let result = await new Promise((resolve, reject) => {
-        this.FB.api(`${this.userId}/friends`, function(res, error) {
-          if(error) reject(error);
+      const result = await new Promise((resolve, reject) => {
+        this.FB.api(`${this.userId}/likes`, function (res, error) {
+          if (error) reject(error);
           resolve(res.data);
         });
       });
@@ -29,11 +30,11 @@ export default class FacebookHelper {
     }
   }
 
-  async publishPost({message}) {
+  async publishPost({ message }) {
     try {
-      let result = await new Promise((resolve, reject) => {
-        this.FB.api(`${this.userId}/feed`, 'post', { message }, function(res, error) {
-          if(error) reject(error);
+      const result = await new Promise((resolve, reject) => {
+        this.FB.api(`${this.userId}/feed`, 'post', { message }, function (res, error) {
+          if (error) reject(error);
           resolve(res);
         });
       });

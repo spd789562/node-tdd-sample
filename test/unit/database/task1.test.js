@@ -4,18 +4,18 @@ describe('database level 1', () => {
   let models = null;
   beforeEach(async (done) => {
     try {
-      models = await task1_initModel()
-      done()
+      models = await task1_initModel();
+      done();
     } catch (e) {
-      done(e)
+      done(e);
     }
   });
 
   it('create user data', async (done) => {
     try {
-      let addUser = {username: 'test', password: 'test', email: 'test@mail.com'}
+      let addUser = {username: 'test', password: 'test', email: 'test@mail.com'};
       let result = {};
-      result = await models.User.create(addUser)
+      result = await models.User.create(addUser);
       result.toJSON().should.has.keys(
         'id',
         'username',
@@ -119,7 +119,7 @@ describe('database level 1', () => {
     });
 
     it('destroy user', async (done) => {
-      try {;
+      try {
         let result = {};
         result = await models.User.findOne({
           where: {
@@ -156,9 +156,9 @@ describe('database task1 find', () => {
       }
       let result = await models.User.create(addUser);
 
-      done()
+      done();
     } catch (e) {
-      done(e)
+      done(e);
     }
   });
 
@@ -167,9 +167,9 @@ describe('database task1 find', () => {
       console.log("=== start ===");
       let results = models.User.findAll();
       console.log("=== end ===");
-      done()
+      done();
     } catch (e) {
-      done(e)
+      done(e);
     }
   });
 
@@ -179,21 +179,21 @@ describe('database task1 find', () => {
       let results = models.User.findAll().then(() => {
         console.log("=== end ===");
       });
-      done()
+      done();
     } catch (e) {
-      done(e)
+      done(e);
     }
   });
 
   it('find user data with async', async (done) => {
     try {
       console.log("=== start ===");
-      let results = await models.User.findAll();
-      (results.length == 1).should.be.true
+      const results = await models.User.findAll();
+      (results.length === 1).should.be.true
       console.log("=== end ===");
-      done()
+      done();
     } catch (e) {
-      done(e)
+      done(e);
     }
   });
 

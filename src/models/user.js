@@ -8,8 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     age: DataTypes.INTEGER,
   }, {
     classMethods: {
-      associate: (models) => {
-      }
+      associate: (models) => {}
     }
   });
 

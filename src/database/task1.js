@@ -1,7 +1,6 @@
-import models from '../models'
-
+import models from '../models';
 
 export default async function task1_initModel() {
-  await models.sequelize.sync({force: true})
+  await models.sequelize.sync({ force: true });
   return models;
 }
