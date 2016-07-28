@@ -94,7 +94,7 @@ describe('practice', () => {
         findTarget.title = input.title;
         findTarget.desc = input.desc;
         findTarget.price = input.price;
-        findTarget.save();
+        await findTarget.save();
 
         findTarget.title.should.be.eq(input.title);
         findTarget.desc.should.be.eq(input.desc);
